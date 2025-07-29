@@ -1,0 +1,79 @@
+test_booking_with_colliding_datetime:
+  # Reserva de 17 a 19
+  - expected_fecha_hora: 2025-01-01 17:00:00
+    expected_duracion: 120
+    reserva_1_fecha: 2025-01-01 18:00:00
+    reserva_1_duracion: 60
+    reserva_2_fecha: 2025-01-01 19:00:00
+    reserva_2_duracion: 60
+  # Reserva de 18 a 20
+  - expected_fecha_hora: 2025-01-01 18:00:00
+    expected_duracion: 120
+    reserva_1_fecha: 2025-01-01 18:00:00
+    reserva_1_duracion: 60
+    reserva_2_fecha: 2025-01-01 19:00:00
+    reserva_2_duracion: 60
+  # Reserva de 18 a 19
+  - expected_fecha_hora: 2025-01-01 18:00:00
+    expected_duracion: 60
+    reserva_1_fecha: 2025-01-01 18:00:00
+    reserva_1_duracion: 60
+    reserva_2_fecha: 2025-01-01 19:00:00
+    reserva_2_duracion: 60
+  # Reserva de 19 a 21
+  - expected_fecha_hora: 2025-01-01 19:00:00
+    expected_duracion: 120
+    reserva_1_fecha: 2025-01-01 18:00:00
+    reserva_1_duracion: 120
+    reserva_2_fecha: 2025-01-01 20:00:00
+    reserva_2_duracion: 60
+  # Reserva de 01 a 02
+  - expected_fecha_hora: 2025-01-02 01:00:00
+    expected_duracion: 60
+    reserva_1_fecha: 2025-01-01 23:00:00
+    reserva_1_duracion: 180
+    reserva_2_fecha: 2025-01-01 20:00:00
+    reserva_2_duracion: 60
+
+test_succesful_booking:
+  - expected_fecha_hora: 2025-01-01 17:00:00
+    expected_duracion: 60
+    reserva_1_fecha: 2025-01-01 18:00:00
+    reserva_1_duracion: 60
+    reserva_2_fecha: 2025-01-01 19:00:00
+    reserva_2_duracion: 60
+
+  - expected_fecha_hora: 2025-01-01 20:00:00
+    expected_duracion: 60
+    reserva_1_fecha: 2025-01-01 18:00:00
+    reserva_1_duracion: 60
+    reserva_2_fecha: 2025-01-01 19:00:00
+    reserva_2_duracion: 60
+
+  - expected_fecha_hora: 2025-01-01 16:00:00
+    expected_duracion: 60
+    reserva_1_fecha: 2025-01-01 18:00:00
+    reserva_1_duracion: 120
+    reserva_2_fecha: 2025-01-01 20:00:00
+    reserva_2_duracion: 120
+
+  - expected_fecha_hora: 2025-01-01 23:00:00
+    expected_duracion: 60
+    reserva_1_fecha: 2025-01-01 18:00:00
+    reserva_1_duracion: 120
+    reserva_2_fecha: 2025-01-01 20:00:00
+    reserva_2_duracion: 120
+
+  - expected_fecha_hora: 2025-01-02 18:00:00
+    expected_duracion: 120
+    reserva_1_fecha: 2025-01-01 18:00:00
+    reserva_1_duracion: 120
+    reserva_2_fecha: 2025-01-01 20:00:00
+    reserva_2_duracion: 120
+
+  - expected_fecha_hora: 2025-01-02 02:00:00
+    expected_duracion: 60
+    reserva_1_fecha: 2025-01-01 23:00:00
+    reserva_1_duracion: 180
+    reserva_2_fecha: 2025-01-01 20:00:00
+    reserva_2_duracion: 60
