@@ -15,7 +15,7 @@ from src.SharedKernel.Domain.Criteria.Fields.Fields import Fields
 T = TypeVar('T', bound=DeclarativeBase)
 
 
-class CriteriaToSQLAlchemyConverter(Generic[T]):
+class CriteriaToSQLAlchemyConverter():
     """
     Convierte objetos Criteria del dominio en consultas SQLAlchemy
     """
