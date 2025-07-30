@@ -15,5 +15,4 @@ class CrearJugadorUseCase:
             email = request.email
         )
         self.__jugador_repository.add(jugador)
-        return jugador
         # TODO: Domain Events

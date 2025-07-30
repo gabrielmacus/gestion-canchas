@@ -4,8 +4,6 @@ from src.SharedKernel.Domain.Criteria.Order.Orders import Orders
 from src.SharedKernel.Domain.Criteria.Pagination.PageSize import PageSize
 from src.SharedKernel.Domain.Criteria.Pagination.PageNumber import PageNumber
 from src.SharedKernel.Domain.Criteria.Fields.Fields import Fields
-
-
 @dataclass(frozen=True)
 class Criteria:
     filters: Filters

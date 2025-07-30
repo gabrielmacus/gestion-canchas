@@ -1,45 +1,44 @@
 from typing import final
+from uuid import UUID
 from src.Administracion.Jugadores.Infraestructure.Models.JugadorModel import JugadorModel
-from src.SharedKernel.Infraestructure.Criteria.CriteriaToSQLAlchemyConverter import CriteriaToSQLAlchemyConverter
+from src.SharedKernel.Infraestructure.Repository.BaseSQLAlchemyRepository import BaseSQLAlchemyRepository
 from src.Administracion.Jugadores.Domain.Contracts.JugadorRepositoryInterface import JugadorRepositoryInterface
 from src.Administracion.Jugadores.Domain.Entities.Jugador import Jugador
-from sqlalchemy.orm import Session
-from src.SharedKernel.Domain.Criteria.Criteria import Criteria
 from sqlalchemy import Engine
 
 @final
-class SAJugadorRepository(JugadorRepositoryInterface):
+class SAJugadorRepository(
+    BaseSQLAlchemyRepository[Jugador, JugadorModel], JugadorRepositoryInterface):
     
     def __init__(self, engine: Engine):
-        self.engine = engine
-        self.criteria_converter = CriteriaToSQLAlchemyConverter()
+        super().__init__(engine, JugadorModel)
+    
+    def model_to_entity(self, model: JugadorModel) -> Jugador:
+        """Convierte un modelo SQLAlchemy a entidad de dominio"""
+        return Jugador.create(
+            str(model.id),
+            str(model.nombre),
+            str(model.apellido),
+            str(model.telefono),
+            None if model.email is None else str(model.email)
+        )
+    
+    def entity_to_model(self, entity: Jugador) -> JugadorModel:
+        """Convierte una entidad de dominio a modelo SQLAlchemy"""
+        return JugadorModel(
+            id=UUID(entity.id.value),
+            nombre=str(entity.nombre.value),
+            apellido=str(entity.apellido.value),
+            telefono=str(entity.telefono.value),
+            email= None if entity.email.value is None else str(entity.email.value) # TODO: ejemplo de errores de IA: aca no me habia agregado el value
+        )
+    
+    def entity_to_update_values(self, entity: Jugador) -> dict[str, str | None]:
+        """Convierte una entidad a un diccionario de valores para update"""
+        return {
+            "nombre": str(entity.nombre),
+            "apellido": str(entity.apellido),
+            "telefono": str(entity.telefono),
+            "email": str(entity.email) if entity.email is not None else None
+        }
 
-    #def add(self, jugador: Jugador):
-    #    JugadorModel()
-    #    #self.db.session.add(jugador)
-    #    #self.db.session.commit()
-    
-    def matching(self, criteria: Criteria) -> list[Jugador]:
-        with Session(self.engine) as session:
-            query = self.criteria_converter.convert(JugadorModel, criteria)
-            results = session.execute(query).scalars().all()
-            return []
-            '''
-            return [
-                Jugador.create(
-                    jugador.id.v,
-                    jugador.nombre.value,
-                    jugador.apellido.value,
-                    jugador.telefono.value,
-                    jugador.email.value
-                ) for jugador in results]
-            '''
-    
-    def update(self, jugador: Jugador) -> None:
-        pass
-    
-    def delete_by_id(self, id: str) -> None:
-        pass
-    
-    def add(self, jugador: Jugador) -> None:
-        pass

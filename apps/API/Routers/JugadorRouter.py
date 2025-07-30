@@ -8,3 +8,8 @@ jugador_router.add_api_route(
     endpoint=jugador_controller.find,
     methods=["GET"]
 )
+jugador_router.add_api_route(
+    path="/",
+    endpoint=jugador_controller.create,
+    methods=["POST"]
+)
