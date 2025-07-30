@@ -6,23 +6,12 @@ from src.SharedKernel.Domain.Criteria.Pagination.PageNumber import PageNumber
 from src.SharedKernel.Domain.Criteria.Pagination.PageSize import PageSize
 from src.SharedKernel.Domain.Criteria.Fields.Fields import Fields
 from src.SharedKernel.Domain.Pagination.PagedResult import PagedResult
-from src.SharedKernel.Domain.Pagination.PagedPageSize import PagedPageSize
-from src.SharedKernel.Domain.Pagination.PagedPageNumber import PagedPageNumber
+from src.SharedKernel.Domain.Services.PaginationService import PaginationService
 
 class PaginarJugadoresUseCase:
-    _repository: JugadorRepositoryInterface
     
-    def __init__(self, repository: JugadorRepositoryInterface):
-        self._repository = repository
+    def __init__(self, pagination_service: PaginationService):
+        self._pagination_service = pagination_service
     
-    def execute(self):
-        criteria = Criteria(
-            filters=Filters([]),
-            orders=Orders([]),
-            page_size=PageSize(10),
-            page_number=PageNumber(1),
-            fields=Fields([])
-        )
-        results = self._repository.matching(criteria)
-        count = self._repository.count_matching(criteria)
-        return PagedResult.from_result(results, count, PagedPageSize(10), PagedPageNumber(1))
+    def execute(self, criteria: Criteria):
+        return self._pagination_service.paginate(criteria)

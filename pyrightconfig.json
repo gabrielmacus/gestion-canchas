@@ -9,10 +9,7 @@
     "ignore": [
         "**/*.pyc"
     ],
-    "allowedUntypedLibraries": [
-        "ffmpeg",
-        "beanie"
-    ],
+    "allowedUntypedLibraries": [],
     "reportMissingImports": false,
     "reportMissingTypeStubs": false,
     "pythonVersion": "3.11",

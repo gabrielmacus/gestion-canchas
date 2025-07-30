@@ -1,5 +1,4 @@
 from typing import Generic, TypeVar
-from SharedKernel.Domain.Pagination.PagedPageSize import PagedPageSize
 from src.SharedKernel.Domain.Criteria.Criteria import Criteria
 from src.SharedKernel.Domain.Pagination.PagedResult import PagedResult
 from src.SharedKernel.Domain.Contracts.Repository.ReaderInterface import ReaderInterface
@@ -28,8 +27,8 @@ class PaginationService(Generic[T]):
         return PagedResult.from_result(
             result, 
             total, 
-            PagedPageSize(criteria.page_size.value), 
-            PagedPageNumber(criteria.page_number.value)
+            criteria.page_size.value, 
+            criteria.page_number.value
         )
         
     def _ensure_pagination_is_set(self, criteria: Criteria) -> None:

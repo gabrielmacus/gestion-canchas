@@ -26,14 +26,14 @@ class PagedResult(Generic[T]):
     def from_result(
         result: list[T], 
         count: int, 
-        page_size: PagedPageSize, 
-        page_number: PagedPageNumber
+        page_size: int, 
+        page_number: int
     ) -> 'PagedResult':
         return PagedResult(
             items=result,
             total=PagedTotalCount(count),
-            page_size=page_size,
-            page_number=page_number
+            page_size=PagedPageSize(page_size),
+            page_number=PagedPageNumber(page_number)
         )
         
     def __str__(self) -> str:
