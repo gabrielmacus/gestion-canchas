@@ -1,7 +1,7 @@
 import random
 from typing import Any
-from src.Administracion.Canchas.Application.UseCases.PaginarCanchasUseCase import PaginarCanchasUseCase
-from src.Administracion.Canchas.Domain.Contracts.CanchaRepositoryInterface import CanchaRepositoryInterface
+from src.Administracion.Reservas.Application.UseCases.PaginarReservasUseCase import PaginarReservasUseCase
+from src.Administracion.Reservas.Domain.Contracts.ReservaRepository import ReservaRepositoryInterface
 from unittest.mock import Mock
 from src.SharedKernel.Domain.Pagination.PagedResult import PagedResult
 from src.SharedKernel.Domain.Criteria.Filter.Filters import Filters
@@ -10,21 +10,21 @@ from src.SharedKernel.Domain.Criteria.Fields.Fields import Fields
 from src.SharedKernel.Domain.Criteria.Pagination.PageSize import PageSize
 from src.SharedKernel.Domain.Criteria.Pagination.PageNumber import PageNumber
 import pytest
-from src.Administracion.Canchas.Domain.Entities.Cancha import Cancha
-from tests.Administracion.Canchas.Domain.Mothers.CanchaMother import CanchaMother
+from src.Administracion.Reservas.Domain.Entities.Reserva import Reserva
+from tests.Administracion.Reservas.Domain.Mothers.ReservaMother import ReservaMother
 from src.SharedKernel.Domain.Services.PaginationService import PaginationService
 from src.SharedKernel.Domain.Criteria.Criteria import Criteria
 from src.SharedKernel.Domain.Criteria.Filter.Filters import Filters
 from src.SharedKernel.Domain.Criteria.Order.Order import Order
 
-class TestPaginarCanchasUseCase:
-    __use_case: PaginarCanchasUseCase
+class TestPaginarReservasUseCase:
+    __use_case: PaginarReservasUseCase
     __pagination_service: Mock
     
     @pytest.fixture(autouse=True)
     def setup(self):
         self.__pagination_service = Mock(PaginationService)
-        self.__use_case = PaginarCanchasUseCase(self.__pagination_service)
+        self.__use_case = PaginarReservasUseCase(self.__pagination_service)
 
     def __then_criteria_is_used(self, criteria: Criteria):
         self.__pagination_service.paginate.assert_called_once_with(criteria)
