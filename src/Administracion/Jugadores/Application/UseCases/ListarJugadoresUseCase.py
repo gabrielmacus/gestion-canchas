@@ -6,7 +6,10 @@ from src.SharedKernel.Domain.Criteria.Pagination.PageNumber import PageNumber
 from src.SharedKernel.Domain.Criteria.Pagination.PageSize import PageSize
 from src.SharedKernel.Domain.Criteria.Fields.Fields import Fields
 
+
 class ListarJugadoresUseCase:
+    _repository: JugadorRepositoryInterface
+    
     def __init__(self, repository: JugadorRepositoryInterface):
         self._repository = repository
     

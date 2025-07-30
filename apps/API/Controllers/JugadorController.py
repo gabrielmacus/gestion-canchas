@@ -1,6 +1,6 @@
-from Administracion.Jugadores.Application.UseCases.ListarJugadoresUseCase import ListarJugadoresUseCase
-from Administracion.Jugadores.Infraestructure.Services.SAJugadorRepository import SAJugadorRepository
-from SharedKernel.Infraestructure.Services.SAConnection import SAConnection
+from src.Administracion.Jugadores.Application.UseCases.ListarJugadoresUseCase import ListarJugadoresUseCase
+from src.Administracion.Jugadores.Infraestructure.Services.SAJugadorRepository import SAJugadorRepository
+from src.SharedKernel.Infraestructure.Services.SAConnection import SAConnection
 
 class JugadorController:
     _listar_jugadores_usecase: ListarJugadoresUseCase

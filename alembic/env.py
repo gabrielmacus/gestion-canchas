@@ -1,13 +1,21 @@
 from logging.config import fileConfig
-
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-
 from alembic import context
+
+import os
+from dotenv import load_dotenv
+_ = load_dotenv()
+
+
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+db_connection_string = os.getenv("DB_CONNECTION_STRING")
+assert db_connection_string is not None
+config.set_main_option("sqlalchemy.url", db_connection_string)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -18,7 +26,9 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+
+from src.Administracion.Jugadores.Infraestructure.Models.JugadorModel import JugadorModel
+target_metadata = [JugadorModel.metadata]
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

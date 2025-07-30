@@ -31,11 +31,11 @@ class Entity(Base):
 
 
 class TestCriteriaToSQLAlchemyConverter:
-    __converter: CriteriaToSQLAlchemyConverter[Entity] | None = None
+    __converter: CriteriaToSQLAlchemyConverter | None = None
     
     @pytest.fixture(autouse=True)
     def setup(self):
-        self.__converter = CriteriaToSQLAlchemyConverter[Entity]()
+        self.__converter = CriteriaToSQLAlchemyConverter()
     
     def __then_compiled_query_is(self, query: Select[tuple[Entity]], expected_query: str):
         compiled_query = str(query.compile(compile_kwargs={"literal_binds": True}))\

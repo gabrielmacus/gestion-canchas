@@ -21,7 +21,12 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - 8000:8000
+      - 7000:8000
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 7080:8080
   db:
     container_name: gestion-canchas-db
     image: postgres:17.5
@@ -30,6 +35,10 @@ services:
       - 5432:5432
     volumes:
       - gestion-canchas-db:/var/lib/postgresql/data
-
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: gestion_canchas_db
+      POSTGRES_PORT: 5432
 volumes:
   gestion-canchas-db:

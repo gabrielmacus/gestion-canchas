@@ -14,7 +14,7 @@ class SAConnection:
     def get_engine(self):
         if self._engine is not None: return self._engine
         
-        db_url = os.getenv("DATABASE_URL")
+        db_url = os.getenv("DB_CONNECTION_STRING")
         assert db_url is not None
         self._engine = create_engine(db_url)
         return self._engine
