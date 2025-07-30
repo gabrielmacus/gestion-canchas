@@ -1,18 +1,19 @@
-from pydantic import BaseModel, EmailStr, model_validator, field_validator
+from pydantic import BaseModel, EmailStr, field_validator
 from typing import Optional
-
 from pydantic_core import PydanticCustomError
 
-class CrearJugadorDTO(BaseModel):
-    id: str
-    nombre: str
-    apellido: str
+class EditarJugadorDTO(BaseModel):
+    nombre: Optional[str] = None
+    apellido: Optional[str] = None
+    telefono: Optional[str] = None
     email: Optional[EmailStr] = None
-    telefono: str
     
     @field_validator('telefono')
     @classmethod
-    def validar_telefono(cls, v: str) -> str:
+    def validar_telefono(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+            
         # Remover espacios en blanco si los hay
         v = v.strip()
         # Validar que solo contenga dígitos
@@ -28,11 +29,3 @@ class CrearJugadorDTO(BaseModel):
                 'El teléfono debe tener entre 7 y 15 dígitos'
             )
         return v
-    
-    @model_validator(mode='after')
-    def validar_contacto(self):
-        if not self.email and not self.telefono:
-            raise PydanticCustomError( 'contacto_missing','Debe proporcionar al menos un email o un teléfono')
-        return self
-    
-    

@@ -50,3 +50,12 @@ class Jugador(AggregateRoot):
     def set_apellido(self, apellido:str):
         self._apellido = JugadorApellido(apellido)
     
+    def set_nombre(self, nombre: str):
+        self._nombre = JugadorNombre(nombre)
+    
+    def set_telefono(self, telefono: str):
+        self._telefono = JugadorTelefono(telefono)
+    
+    def set_email(self, email: str | None):
+        self._email = JugadorEmail(email)
+    

@@ -1,24 +1,8 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 from src.Administracion.Reservas.Domain.Entities.Reserva import Reserva
-from src.SharedKernel.Domain.Criteria.Criteria import Criteria
+from src.SharedKernel.Domain.Contracts.Repository.RepositoryInterface import RepositoryInterface
 
-class ReservaRepositoryInterface(ABC):
-    @abstractmethod
-    def add(self, reserva: Reserva) -> None:
-        pass
-    
-    @abstractmethod
-    def update(self, reserva: Reserva) -> None:
-        pass
-    
-    @abstractmethod
-    def matching(self, criteria: Criteria) -> list[Reserva]:
-        pass
-    
-    @abstractmethod
-    def delete_by_id(self, id: str) -> None:
-        pass
-    
+class ReservaRepositoryInterface(RepositoryInterface[Reserva], ABC):
     '''
     @abstractmethod
     def find_active_by_cancha(self, cancha_id: str) -> list[Reserva]:
