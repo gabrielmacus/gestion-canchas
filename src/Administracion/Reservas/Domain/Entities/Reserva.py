@@ -4,7 +4,9 @@ from src.Administracion.Reservas.Domain.ValueObjects.ReservaFechaHora import Res
 from src.Administracion.Reservas.Domain.ValueObjects.ReservaDuracionMinutos import ReservaDuracionMinutos
 from src.Administracion.Reservas.Domain.ValueObjects.ReservaCanchaId import ReservaCanchaId
 from src.Administracion.Reservas.Domain.ValueObjects.ReservaId import ReservaId
+from dataclasses import dataclass
 
+@dataclass
 class Reserva(AggregateRoot):
     _id: ReservaId
     _fecha_hora: ReservaFechaHora

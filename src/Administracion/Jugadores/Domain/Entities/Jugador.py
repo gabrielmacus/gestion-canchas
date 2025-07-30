@@ -4,7 +4,9 @@ from src.Administracion.Jugadores.Domain.ValueObjects.JugadorNombre import Jugad
 from src.Administracion.Jugadores.Domain.ValueObjects.JugadorApellido import JugadorApellido
 from src.Administracion.Jugadores.Domain.ValueObjects.JugadorTelefono import JugadorTelefono
 from src.Administracion.Jugadores.Domain.ValueObjects.JugadorEmail import JugadorEmail
+from dataclasses import dataclass
 
+@dataclass
 class Jugador(AggregateRoot):
     _id: JugadorId
     _nombre: JugadorNombre

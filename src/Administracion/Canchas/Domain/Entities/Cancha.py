@@ -2,7 +2,9 @@ from src.SharedKernel.Domain.Entities.AggregateRoot import AggregateRoot
 from src.Administracion.Canchas.Domain.ValueObjects.CanchaId import CanchaId
 from src.Administracion.Canchas.Domain.ValueObjects.CanchaNombre import CanchaNombre
 from src.Administracion.Canchas.Domain.ValueObjects.CanchaTechada import CanchaTechada
+from dataclasses import dataclass
 
+@dataclass
 class Cancha(AggregateRoot):
     _id: CanchaId
     _nombre: CanchaNombre
