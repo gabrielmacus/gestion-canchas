@@ -3,10 +3,10 @@ from src.SharedKernel.Domain.Criteria.Criteria import Criteria
 from src.SharedKernel.Domain.Pagination.PagedResult import PagedResult
 from src.SharedKernel.Domain.Contracts.Repository.ReaderInterface import ReaderInterface
 from src.SharedKernel.Domain.Contracts.Repository.CounterInterface import CounterInterface
-from src.SharedKernel.Domain.Pagination.PagedPageNumber import PagedPageNumber
 
 T = TypeVar('T')
 
+# TODO: logging
 class PaginationService(Generic[T]):
     def __init__(self, 
                  reader: ReaderInterface[T], 
@@ -21,16 +21,15 @@ class PaginationService(Generic[T]):
         result = self.__reader.matching(criteria)
         total = self.__counter.count_matching(criteria)
         
-        assert criteria.page_size.value is not None
-        assert criteria.page_number.value is not None
+        assert criteria.pagination is not None
         
         return PagedResult.from_result(
             result, 
             total, 
-            criteria.page_size.value, 
-            criteria.page_number.value
+            criteria.pagination.size, 
+            criteria.pagination.page
         )
         
     def _ensure_pagination_is_set(self, criteria: Criteria) -> None:
-        if criteria.page_size.value is None or criteria.page_number.value is None:
+        if criteria.pagination is None:
             raise ValueError("La paginación debe tener un tamaño de página y un número de página")

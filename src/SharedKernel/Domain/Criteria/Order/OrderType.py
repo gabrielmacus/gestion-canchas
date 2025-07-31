@@ -3,8 +3,8 @@ from dataclasses import dataclass
 
 
 class OrderTypes(Enum):
-    ASC = "ASC"
-    DESC = "DESC"
+    ASC = "asc"
+    DESC = "desc"
     
 @dataclass(frozen=True)
 class OrderType:

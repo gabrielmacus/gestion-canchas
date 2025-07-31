@@ -9,8 +9,7 @@ from src.SharedKernel.Domain.Criteria.Filter.FilterValue import FilterValue
 from src.SharedKernel.Domain.Criteria.Filter.Filters import Filters
 from src.SharedKernel.Domain.Criteria.Order.OrderBy import OrderBy
 from src.SharedKernel.Domain.Criteria.Order.Orders import Orders
-from src.SharedKernel.Domain.Criteria.Pagination.PageSize import PageSize
-from src.SharedKernel.Domain.Criteria.Pagination.PageNumber import PageNumber
+from src.SharedKernel.Domain.Criteria.Pagination import Pagination
 from src.SharedKernel.Domain.Criteria.Fields.Fields import Fields
 from src.SharedKernel.Domain.Contracts.TimeProviderInterface import TimeProviderInterface
 
@@ -48,7 +47,6 @@ class ReservasActivasQuery:
                     order_by=OrderBy("id"),
                     order_type=OrderType(OrderTypes.DESC)
                 )]),
-            page_size=PageSize(None),
-            page_number=PageNumber(None),
+            pagination=None,
             fields=Fields(None)
         )

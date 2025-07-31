@@ -19,8 +19,6 @@ from src.SharedKernel.Domain.Criteria.Order.Order import Order
 from src.SharedKernel.Domain.Criteria.Order.OrderBy import OrderBy
 from src.SharedKernel.Domain.Criteria.Order.OrderType import OrderType, OrderTypes
 from src.SharedKernel.Domain.Criteria.Order.Orders import Orders
-from src.SharedKernel.Domain.Criteria.Pagination.PageSize import PageSize
-from src.SharedKernel.Domain.Criteria.Pagination.PageNumber import PageNumber
 from src.SharedKernel.Domain.Criteria.Fields.Fields import Fields
 import parametrize_from_file as pff
 
@@ -67,8 +65,7 @@ class TestBookingService:
                     order_by=OrderBy("id"),
                     order_type=OrderType(OrderTypes.DESC)
                 )]),
-            page_size=PageSize(None),
-            page_number=PageNumber(None),
+            pagination=None,
             fields=Fields(None)
         ))
 

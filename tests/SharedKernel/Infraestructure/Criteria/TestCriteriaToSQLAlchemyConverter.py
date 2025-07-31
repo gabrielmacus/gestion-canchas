@@ -11,8 +11,7 @@ from src.SharedKernel.Domain.Criteria.Filter.Filters import Filters
 from src.SharedKernel.Domain.Criteria.Order.Order import Order
 from src.SharedKernel.Domain.Criteria.Order.OrderType import OrderType,OrderTypes
 from src.SharedKernel.Domain.Criteria.Order.Orders import Orders
-from src.SharedKernel.Domain.Criteria.Pagination.PageSize import PageSize
-from src.SharedKernel.Domain.Criteria.Pagination.PageNumber import PageNumber
+from src.SharedKernel.Domain.Criteria.Pagination import Pagination
 from src.SharedKernel.Domain.Criteria.Filter.FilterField import FilterField
 from src.SharedKernel.Domain.Criteria.Filter.FilterValue import FilterValue
 from src.SharedKernel.Domain.Criteria.Fields.Fields import Fields
@@ -49,8 +48,7 @@ class TestCriteriaToSQLAlchemyConverter:
         criteria = Criteria(
             filters=Filters([]),
             orders=Orders([]),
-            page_size=PageSize(None),
-            page_number=PageNumber(None),
+            pagination=None,
             fields=Fields([
                 Field("id")
             ])
@@ -69,8 +67,7 @@ class TestCriteriaToSQLAlchemyConverter:
         criteria = Criteria(
             filters=Filters(None),
             orders=Orders(None),
-            page_size=PageSize(None),
-            page_number=PageNumber(None),
+            pagination=None,
             fields=Fields(None)
         )
         
@@ -93,8 +90,7 @@ class TestCriteriaToSQLAlchemyConverter:
                 )
             ]),
             orders=Orders([]),
-            page_size=PageSize(10),
-            page_number=PageNumber(1),
+            pagination=Pagination(10, 1),
             fields=Fields([])
         )
         
@@ -126,8 +122,7 @@ class TestCriteriaToSQLAlchemyConverter:
                     order_type=OrderType(OrderTypes.DESC)
                 )
             ]),
-            page_size=PageSize(None),
-            page_number=PageNumber(None),
+            pagination=None ,
             fields=Fields([])
         )
         
@@ -174,8 +169,7 @@ class TestCriteriaToSQLAlchemyConverter:
                     order_type=OrderType(OrderTypes.DESC)
                 )
             ]),
-            page_size=PageSize(10),
-            page_number=PageNumber(1),
+            pagination=Pagination(10, 1),
             fields=Fields([])
         )
         

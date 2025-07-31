@@ -7,8 +7,7 @@ from src.SharedKernel.Domain.Criteria.Filter.Filters import Filters
 from src.SharedKernel.Domain.Criteria.Filter.FilterOperator import FilterOperators
 from src.SharedKernel.Domain.Criteria.Order.Orders import Orders
 from src.SharedKernel.Domain.Criteria.Order.OrderType import OrderTypes
-from src.SharedKernel.Domain.Criteria.Pagination.PageSize import PageSize
-from src.SharedKernel.Domain.Criteria.Pagination.PageNumber import PageNumber
+from src.SharedKernel.Domain.Criteria.Pagination import Pagination
 from src.SharedKernel.Domain.Criteria.Fields.Fields import Fields
 from src.SharedKernel.Domain.Criteria.CountCriteria import CountCriteria
 
@@ -61,14 +60,13 @@ class CriteriaToSQLAlchemyConverter():
                 query = self._apply_filter(query, filter)
         return query
     
-    def _apply_pagination(self, query: Select[tuple[T]], page_size: PageSize, page_number: PageNumber):
+    def _apply_pagination(self, query: Select[tuple[T]], pagination: Pagination | None):
         """
         Aplica una paginación a la consulta SQLAlchemy
         """
-        if page_number.value is not None:
-            assert page_size.value is not None
-            query = query.limit(page_size.value)
-            query = query.offset((page_number.value - 1) * page_size.value)
+        if pagination is not None:
+            query = query.limit(pagination.size)
+            query = query.offset((pagination.page - 1) * pagination.size)
         return query
     
     def _apply_order(self, query: Select[tuple[T]], orders: Orders):
@@ -93,7 +91,7 @@ class CriteriaToSQLAlchemyConverter():
         query = select(entity)
         query = self._select_fields(entity,query, criteria.fields)
         query = self._apply_filters(query, criteria.filters)
-        query = self._apply_pagination(query, criteria.page_size, criteria.page_number)
+        query = self._apply_pagination(query, criteria.pagination)
         query = self._apply_order(query, criteria.orders)
         return query
 

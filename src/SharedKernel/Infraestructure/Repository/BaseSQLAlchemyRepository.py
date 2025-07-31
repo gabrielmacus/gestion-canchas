@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import TypeVar, Generic, Type, Any
 from sqlalchemy.orm import Session, DeclarativeBase
-from sqlalchemy import Engine, delete, update
+from sqlalchemy import Engine, delete, update, select
 from src.SharedKernel.Domain.Contracts.Repository.RepositoryInterface import RepositoryInterface
 from src.SharedKernel.Domain.Criteria.Criteria import Criteria
 from src.SharedKernel.Domain.Criteria.CountCriteria import CountCriteria
@@ -49,6 +49,13 @@ class BaseSQLAlchemyRepository(RepositoryInterface[T], ABC, Generic[T, M]):
             model_instance = self.entity_to_model(entity)
             session.add(model_instance)
             session.commit()
+            
+    def get_by_id(self, id: str) -> T | None:
+        with Session(self.engine) as session:
+            # type: ignore en la siguiente línea es necesario debido a limitaciones del sistema de tipos con genéricos
+            query = select(self.model_class).where(self.model_class.id == id)  # type: ignore
+            result = session.execute(query).scalar_one_or_none()
+            return self.model_to_entity(result) if result else None
     
     @abstractmethod
     def model_to_entity(self, model: M) -> T:

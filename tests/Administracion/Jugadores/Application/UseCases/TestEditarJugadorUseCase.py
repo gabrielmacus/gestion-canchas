@@ -19,6 +19,9 @@ class TestEditarJugadorUseCase:
     def __then_jugador_is_updated(self, id: str, expected_jugador: Jugador):
         self.__jugador_repository.update_by_id.assert_called_once_with(id, expected_jugador)
     
+    def __then_jugador_is_searched(self, id: str):
+        self.__jugador_finder.find_by_id.assert_called_once_with(id)
+    
     def test_update_jugador(self):
         # Given
         jugador = JugadorMother.create()
@@ -41,4 +44,5 @@ class TestEditarJugadorUseCase:
         self.__use_case.execute(jugador.id.value, data,)
         
         # Then
+        self.__then_jugador_is_searched(jugador.id.value)
         self.__then_jugador_is_updated(jugador.id.value, expected_jugador)

@@ -7,8 +7,7 @@ from src.SharedKernel.Domain.Pagination.PagedResult import PagedResult
 from src.SharedKernel.Domain.Criteria.Filter.Filters import Filters
 from src.SharedKernel.Domain.Criteria.Order.Orders import Orders
 from src.SharedKernel.Domain.Criteria.Fields.Fields import Fields
-from src.SharedKernel.Domain.Criteria.Pagination.PageSize import PageSize
-from src.SharedKernel.Domain.Criteria.Pagination.PageNumber import PageNumber
+from src.SharedKernel.Domain.Criteria.Pagination import Pagination
 import pytest
 from src.Administracion.Reservas.Domain.Entities.Reserva import Reserva
 from tests.Administracion.Reservas.Domain.Mothers.ReservaMother import ReservaMother
@@ -34,8 +33,7 @@ class TestPaginarReservasUseCase:
         criteria = Criteria(
             filters=Filters([]),
             orders=Orders([]),
-            page_number=PageNumber(random.randint(1, 100)),
-            page_size=PageSize(random.randint(1, 100)),
+            pagination=Pagination(random.randint(1, 100), random.randint(1, 100)),
             fields=Fields([])
         )
         # When

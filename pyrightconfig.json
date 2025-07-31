@@ -10,7 +10,7 @@
         "**/*.pyc"
     ],
     "allowedUntypedLibraries": [],
-    "reportMissingImports": false,
+    "reportMissingImports": true,
     "reportMissingTypeStubs": false,
     "pythonVersion": "3.11",
     "pythonPlatform": "Linux"

@@ -1,4 +1,3 @@
-from src.Administracion.Jugadores.Infraestructure.Models.JugadorModel import JugadorModel
 from apps.API.DTOs.JugadorDTO import JugadorDTO
 from src.SharedKernel.Infraestructure.DTOs.PagedResponseDTO import PagedResponseDTO
 from src.SharedKernel.Domain.Pagination.PagedResult import PagedResult

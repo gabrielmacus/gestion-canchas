@@ -15,6 +15,9 @@ class TestEliminarJugadorUseCase:
     def __given_jugador_finder_returns_jugador(self, jugador: Jugador):
         self.__jugador_finder.find_by_id.return_value = jugador
     
+    def __then_jugador_is_searched(self, id: str):
+        self.__jugador_finder.find_by_id.assert_called_once_with(id)
+    
     def __then_jugador_is_deleted(self, id: str):
         self.__jugador_repository.delete_by_id.assert_called_once_with(id)
     
@@ -27,5 +30,6 @@ class TestEliminarJugadorUseCase:
         self.__use_case.execute(jugador.id.value)
         
         # Then
+        self.__then_jugador_is_searched(jugador.id.value)
         self.__then_jugador_is_deleted(jugador.id.value)
-  
+    
