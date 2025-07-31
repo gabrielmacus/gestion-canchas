@@ -5,6 +5,7 @@ from src.Administracion.Reservas.Domain.ValueObjects.ReservaDuracionMinutos impo
 from src.Administracion.Reservas.Domain.ValueObjects.ReservaCanchaId import ReservaCanchaId
 from src.Administracion.Reservas.Domain.ValueObjects.ReservaId import ReservaId
 from dataclasses import dataclass
+from src.Administracion.Reservas.Domain.ValueObjects.ReservaJugadorId import ReservaJugadorId
 
 @dataclass
 class Reserva(AggregateRoot):
@@ -12,13 +13,14 @@ class Reserva(AggregateRoot):
     _fecha_hora: ReservaFechaHora
     _duracion: ReservaDuracionMinutos
     _cancha_id: ReservaCanchaId
+    _jugador_id: ReservaJugadorId # TODO: aca la IA habia importado un modulo (JugadorId) de otro dominio, violando DDD
     
-    def __init__(self, id: str, fecha_hora:datetime, duracion:int, cancha_id:str, now:datetime):
+    def __init__(self, id: str, fecha_hora:datetime, duracion:int, cancha_id:str, jugador_id:str, now:datetime):
         self._id = ReservaId(id)
         self._fecha_hora = ReservaFechaHora(fecha_hora, now)
         self._duracion = ReservaDuracionMinutos(duracion)
         self._cancha_id = ReservaCanchaId(cancha_id)
-        
+        self._jugador_id = ReservaJugadorId(jugador_id)
         super().__init__()
     
     @property
@@ -37,10 +39,14 @@ class Reserva(AggregateRoot):
     def cancha_id(self):
         return self._cancha_id
     
+    @property
+    def jugador_id(self):
+        return self._jugador_id
+    
     @staticmethod
-    def create(id: str, fecha_hora:datetime, duracion:int, cancha_id:str, now:datetime):
+    def create(id: str, fecha_hora:datetime, duracion:int, cancha_id:str, jugador_id:str, now:datetime):
         # TODO: Domain event
-        return Reserva(id, fecha_hora, duracion, cancha_id, now)
+        return Reserva(id, fecha_hora, duracion, cancha_id, jugador_id, now)
     
     def calculate_fecha_hora_fin(self) -> datetime:
         return self._fecha_hora.value + timedelta(minutes=self._duracion.value)

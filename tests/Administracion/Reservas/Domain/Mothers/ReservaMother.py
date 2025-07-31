@@ -11,12 +11,14 @@ class ReservaMother:
         id: str | None = None, 
         fecha_hora: datetime | None = None, 
         duracion: int | None = None,
-        cancha_id: str | None = None
+        cancha_id: str | None = None,
+        jugador_id: str | None = None
     ) -> Reserva:
         return Reserva(
             id=IdMother.create(id),
             fecha_hora=ReservaFechaHoraMother.create(fecha_hora),
             duracion=ReservaDuracionMinutosMother.create(duracion),
             cancha_id=IdMother.create(cancha_id),
+            jugador_id=IdMother.create(jugador_id),
             now=now,
         )

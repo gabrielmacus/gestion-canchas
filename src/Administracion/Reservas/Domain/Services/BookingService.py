@@ -16,15 +16,15 @@ class BookingService:
         self._time_provider = time_provider
         self._reserva_repository = reserva_repository
     
-    def book(self, id: str, fecha_hora:datetime, duracion:int, cancha_id:str):
-        self._ensure_reserva_is_not_colliding(fecha_hora, duracion, cancha_id)
-        reserva = Reserva.create(id, fecha_hora, duracion, cancha_id, self._time_provider.now_utc())
+    def book(self, id: str, fecha_hora:datetime, duracion:int, cancha_id:str, jugador_id:str):
+        self.ensure_reserva_is_not_colliding(fecha_hora, duracion, cancha_id)
+        reserva = Reserva.create(id, fecha_hora, duracion, cancha_id, jugador_id, self._time_provider.now_utc())
         self._reserva_repository.add(reserva)
         return reserva
         
-    def _ensure_reserva_is_not_colliding(
-        self, fecha_hora_inicio:datetime, duracion:int, cancha_id:str):
-        """Verifica si la reserva colisiona con otras reservas activas.
+    def ensure_reserva_is_not_colliding(
+        self, fecha_hora_inicio:datetime, duracion:int, cancha_id:str, reserva_id: str | None = None):
+        """Verifica si la reserva colisiona con otras reservas activas. Se excluye el id
 
         Args:
             fecha_hora (datetime): Fecha y hora de la reserva.
@@ -35,7 +35,7 @@ class BookingService:
         """
         fecha_hora_fin = fecha_hora_inicio + timedelta(minutes=duracion)
         reservas_activas = self._reserva_repository.matching(
-            ReservasActivasQuery.create(cancha_id, self._time_provider)
+            ReservasActivasQuery.create(cancha_id, self._time_provider, reserva_id)
         )
         for reserva in reservas_activas:
             if fecha_hora_inicio >= reserva.fecha_hora.value and fecha_hora_inicio < reserva.calculate_fecha_hora_fin():

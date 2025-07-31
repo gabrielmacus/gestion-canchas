@@ -9,7 +9,8 @@ class ReservaFechaHora(DateTimeValueObject):
     def __post_init__(self):
         self._ensure_is_greater_than_now()
         self._ensure_is_less_than_3_months_from_now()
-    
+        self._ensure_is_at_hour_start()
+        
     def _ensure_is_greater_than_now(self) -> None:
         # TODO: Verificar si es pertinente. Ej: llegan jugadores sobre la hora y aceptan jugar menos del tiempo pagado, pero deseo cargar igual la reserva.
         if self.value < self.now:
@@ -20,5 +21,5 @@ class ReservaFechaHora(DateTimeValueObject):
             raise InvalidFechaHoraException("La fecha no puede ser mayor a 3 meses desde la fecha actual")
         
     def _ensure_is_at_hour_start(self) -> None:
-        if self.value.minute != 0:
-            raise InvalidFechaHoraException("Los minutos deben ser 0")
+        if self.value.minute != 0 or self.value.second != 0:
+            raise InvalidFechaHoraException("La hora de reserva debe ser exacta (minutos y segundos deben ser 0)")

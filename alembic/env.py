@@ -30,6 +30,7 @@ if config.config_file_name is not None:
 from src.SharedKernel.Infraestructure.Models.BaseSQLAlchemyModel import BaseSQLAlchemyModel
 from src.Administracion.Canchas.Infraestructure.Models.CanchaModel import *
 from src.Administracion.Jugadores.Infraestructure.Models.JugadorModel import *
+from src.Administracion.Reservas.Infraestructure.Models.ReservaModel import *
 
 
 target_metadata = [BaseSQLAlchemyModel.metadata]

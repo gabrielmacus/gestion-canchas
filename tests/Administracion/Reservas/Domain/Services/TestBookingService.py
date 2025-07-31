@@ -117,7 +117,8 @@ class TestBookingService:
             id=expected_reserva.id.value,
             fecha_hora=expected_reserva.fecha_hora.value,
             duracion=expected_reserva.duracion.value,
-            cancha_id=expected_reserva.cancha_id.value
+            cancha_id=expected_reserva.cancha_id.value,
+            jugador_id=expected_reserva.jugador_id.value
         )
         
         # Then
@@ -158,7 +159,8 @@ class TestBookingService:
                 id=IdMother.create(),
                 fecha_hora=expected_fecha_hora,
                 duracion=expected_duracion,
-                cancha_id=cancha_id
+                cancha_id=cancha_id,
+                jugador_id=IdMother.create()
             )
         
         # Then

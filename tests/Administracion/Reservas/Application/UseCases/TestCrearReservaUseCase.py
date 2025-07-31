@@ -22,7 +22,8 @@ class TestCrearReservaUseCase:
             id=request.id_reserva,
             fecha_hora=request.fecha_hora,
             duracion=request.duracion,
-            cancha_id=request.cancha_id
+            cancha_id=request.cancha_id,
+            jugador_id=request.jugador_id
         )
 
     def test_crear_reserva(self):
@@ -31,7 +32,8 @@ class TestCrearReservaUseCase:
             id_reserva= IdMother.create(),
             fecha_hora=ReservaFechaHoraMother.create(),
             duracion=ReservaDuracionMinutosMother.create(),
-            cancha_id= IdMother.create()
+            cancha_id= IdMother.create(),
+            jugador_id= IdMother.create()
         )
         
         # When

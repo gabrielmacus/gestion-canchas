@@ -3,10 +3,10 @@ from typing import Optional
 from pydantic_core import PydanticCustomError
 
 class EditarJugadorDTO(BaseModel):
-    nombre: Optional[str] = None
-    apellido: Optional[str] = None
-    telefono: Optional[str] = None
-    email: Optional[EmailStr] = None
+    nombre: Optional[str]
+    apellido: Optional[str]
+    telefono: Optional[str]
+    email: Optional[EmailStr]
     
     @field_validator('telefono')
     @classmethod

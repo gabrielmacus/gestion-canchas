@@ -27,18 +27,18 @@ class SAJugadorRepository(
         """Convierte una entidad de dominio a modelo SQLAlchemy"""
         return JugadorModel(
             id=UUID(entity.id.value),
-            nombre=str(entity.nombre.value),
-            apellido=str(entity.apellido.value),
-            telefono=str(entity.telefono.value),
-            email= None if entity.email.value is None else str(entity.email.value) # TODO: ejemplo de errores de IA: aca no me habia agregado el value
+            nombre=entity.nombre.value,
+            apellido=entity.apellido.value,
+            telefono=entity.telefono.value,
+            email= None if entity.email.value is None else entity.email.value # TODO: ejemplo de errores de IA: aca no me habia agregado el value
         )
     
     def entity_to_update_values(self, entity: Jugador) -> dict[str, str | None]:
         """Convierte una entidad a un diccionario de valores para update"""
         return {
-            "nombre": str(entity.nombre),
-            "apellido": str(entity.apellido),
-            "telefono": str(entity.telefono),
-            "email": str(entity.email) if entity.email is not None else None
+            "nombre": entity.nombre.value,
+            "apellido": entity.apellido.value,
+            "telefono": entity.telefono.value,
+            "email": entity.email.value if entity.email is not None else None
         }
 
