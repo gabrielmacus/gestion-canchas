@@ -16,19 +16,19 @@ class Reserva(AggregateRoot):
     _duracion: ReservaDuracionMinutos
     _cancha_id: ReservaCanchaId
     _jugador_id: ReservaJugadorId # TODO: aca la IA habia importado un modulo (JugadorId) de otro dominio, violando DDD
-    _cancha_nombre: ReservaCanchaNombre
-    _jugador_nombre: ReservaJugadorNombre
+    _cancha_nombre: ReservaCanchaNombre | None
+    _jugador_nombre: ReservaJugadorNombre | None
     
     
     
-    def __init__(self, id: str, fecha_hora:datetime, duracion:int, cancha_id:str, jugador_id:str, cancha_nombre:str, jugador_nombre:str, now:datetime):
+    def __init__(self, id: str, fecha_hora:datetime, duracion:int, cancha_id:str, jugador_id:str, now:datetime, cancha_nombre:str | None = None, jugador_nombre:str | None = None):
         self._id = ReservaId(id)
         self._fecha_hora = ReservaFechaHora(fecha_hora, now)
         self._duracion = ReservaDuracionMinutos(duracion)
         self._cancha_id = ReservaCanchaId(cancha_id)
         self._jugador_id = ReservaJugadorId(jugador_id)
-        self._cancha_nombre = ReservaCanchaNombre(cancha_nombre)
-        self._jugador_nombre = ReservaJugadorNombre(jugador_nombre)
+        self._cancha_nombre = ReservaCanchaNombre(cancha_nombre) if cancha_nombre else None
+        self._jugador_nombre = ReservaJugadorNombre(jugador_nombre) if jugador_nombre else None
         super().__init__()
     
     @property
@@ -60,9 +60,9 @@ class Reserva(AggregateRoot):
         return self._jugador_nombre
     
     @staticmethod
-    def create(id: str, fecha_hora:datetime, duracion:int, cancha_id:str, jugador_id:str, cancha_nombre:str, jugador_nombre:str, now:datetime):
+    def create(id: str, fecha_hora:datetime, duracion:int, cancha_id:str, jugador_id:str, now:datetime):
         # TODO: Domain event
-        return Reserva(id, fecha_hora, duracion, cancha_id, jugador_id, cancha_nombre, jugador_nombre, now)
+        return Reserva(id, fecha_hora, duracion, cancha_id, jugador_id, now, cancha_nombre=None, jugador_nombre=None    )
     
     def calculate_fecha_hora_fin(self) -> datetime:
         return self._fecha_hora.value + timedelta(minutes=self._duracion.value)

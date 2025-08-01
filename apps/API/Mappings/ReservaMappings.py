@@ -22,6 +22,6 @@ class ReservaMappings:
             duracion=reserva.duracion.value,
             cancha_id=reserva.cancha_id.value,
             jugador_id=reserva.jugador_id.value,
-            cancha_nombre=reserva.cancha_nombre.value,
-            jugador_nombre=reserva.jugador_nombre.value
+            cancha_nombre=reserva.cancha_nombre.value if reserva.cancha_nombre else None,
+            jugador_nombre=reserva.jugador_nombre.value if reserva.jugador_nombre else None
         ) 

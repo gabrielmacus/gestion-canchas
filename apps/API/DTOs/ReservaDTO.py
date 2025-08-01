@@ -9,6 +9,6 @@ class ReservaDTO(BaseModel):
     duracion: int
     cancha_id: str
     jugador_id: str 
-    cancha_nombre: str
-    jugador_nombre: str
+    cancha_nombre: str | None = None
+    jugador_nombre: str | None = None
     

@@ -27,6 +27,8 @@ MarkupSafe==3.0.2
 mdurl==0.1.2
 more-itertools==10.7.0
 nestedtext==3.7
+nodeenv==1.9.1
+nodejs-wheel-binaries==22.18.0
 packaging==25.0
 parametrize_from_file==0.20.0
 pluggy==1.6.0
@@ -34,6 +36,7 @@ psycopg2==2.9.10
 pydantic==2.11.7
 pydantic_core==2.33.2
 Pygments==2.19.2
+pyright==1.1.403
 pytest==8.4.1
 pytest-dotenv==0.5.2
 python-dateutil==2.9.0.post0
