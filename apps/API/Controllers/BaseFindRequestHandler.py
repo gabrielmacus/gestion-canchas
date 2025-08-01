@@ -14,7 +14,7 @@ class BaseFindRequestHandler(ABC, Generic[T, R]):
         criteria = QueryMappings.to_criteria(query)
         result = self._paginate(criteria)
         return self._map_to_response(result)
-
+    
     @abstractmethod
     def _paginate(self, criteria: Criteria) -> PagedResult[T]:
         pass

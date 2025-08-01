@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from apps.API.Controllers.Cancha.CanchaFindHandler import CanchaFindHandler
+from apps.API.Controllers.Cancha.CanchaGetByIdHandler import CanchaGetByIdHandler
 from apps.API.Controllers.Cancha.CanchaCreateHandler import CanchaCreateHandler
 from apps.API.Controllers.Cancha.CanchaUpdateHandler import CanchaUpdateHandler
 from apps.API.Controllers.Cancha.CanchaDeleteHandler import CanchaDeleteHandler
@@ -10,6 +11,11 @@ cancha_router.add_api_route(
     path="/",
     endpoint=CanchaFindHandler().find,
     methods=["GET"],
+)
+cancha_router.add_api_route(
+    path="/{id}",
+    endpoint=CanchaGetByIdHandler().get_by_id,
+    methods=["GET"]
 )
 cancha_router.add_api_route(
     path="/",

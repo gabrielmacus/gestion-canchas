@@ -1,0 +1,1 @@
+# Excepciones para el módulo de Usuarios 

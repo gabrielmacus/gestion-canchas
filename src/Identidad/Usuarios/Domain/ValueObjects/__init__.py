@@ -1,0 +1,1 @@
+# ValueObjects para el módulo de Usuarios 
