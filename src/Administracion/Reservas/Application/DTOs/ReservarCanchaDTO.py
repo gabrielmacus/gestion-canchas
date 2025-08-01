@@ -6,8 +6,6 @@ from datetime import datetime
 
 class ReservarCanchaDTO(BaseModel):
     id: str
-class ReservarCanchaDTO(BaseModel):
-    id_reserva: str
     fecha_hora: datetime
     duracion: int
     cancha_id: str
