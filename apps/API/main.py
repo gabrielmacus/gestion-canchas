@@ -50,30 +50,12 @@ Un sistema completo para la gestión de canchas deportivas, jugadores y reservas
 ---
 
 **Contacto del equipo de desarrollo:**
-- 📧 Email: desarrollo@gestion-canchas.com
-- 🌐 Web: https://gestion-canchas.com
+- 📧 Email: gabrielmacus@gmail.com
 """
 
 app_version = "1.0.0"
-environment = os.getenv("ENVIRONMENT", "development")
+environment = os.getenv("ENVIRONMENT", os.getenv("ENV", "development"))
 
-# Configuración de seguridad para Swagger
-security = HTTPBasic()
-SWAGGER_USERNAME = os.getenv("SWAGGER_USERNAME", "admin")
-SWAGGER_PASSWORD = os.getenv("SWAGGER_PASSWORD", "admin123")
-
-def get_current_user(credentials: HTTPBasicCredentials = Depends(security)):
-    """Verificación de credenciales para acceso a documentación en producción"""
-    is_correct_username = secrets.compare_digest(credentials.username, SWAGGER_USERNAME)
-    is_correct_password = secrets.compare_digest(credentials.password, SWAGGER_PASSWORD)
-    
-    if not (is_correct_username and is_correct_password):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Credenciales incorrectas",
-            headers={"WWW-Authenticate": "Basic"},
-        )
-    return credentials.username
 
 # Configuración personalizada de OpenAPI
 def custom_openapi():
@@ -87,131 +69,33 @@ def custom_openapi():
         routes=app.routes,
         contact={
             "name": "Equipo de Desarrollo - Gestión Canchas",
-            "email": "desarrollo@gestion-canchas.com",
-            "url": "https://gestion-canchas.com"
+            "email": "gabrielmacus@gmail.com"
         },
         license_info={
             "name": "MIT License",
             "url": "https://opensource.org/licenses/MIT"
         },
         servers=[
-            {
-                "url": "http://localhost:8000",
-                "description": "Servidor de desarrollo"
-            },
-            {
-                "url": "https://api.gestion-canchas.com",
-                "description": "Servidor de producción"
-            }
+            
         ]
     )
-    
-    # Configuración de componentes reutilizables
-    openapi_schema["components"]["schemas"].update({
-        "ValidationError": {
-            "title": "ValidationError",
-            "type": "object",
-            "properties": {
-                "detail": {
-                    "title": "Detail",
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "loc": {"type": "array", "items": {"type": "string"}},
-                            "msg": {"type": "string"},
-                            "type": {"type": "string"}
-                        }
-                    }
-                }
-            }
-        }
-    })
-    
-    # Agregar tags personalizados
-    openapi_schema["tags"] = [
-        {
-            "name": "canchas",
-            "description": "Operaciones relacionadas con la gestión de canchas deportivas",
-            "externalDocs": {
-                "description": "Documentación detallada",
-                "url": "https://docs.gestion-canchas.com/canchas"
-            }
-        },
-        {
-            "name": "jugadores", 
-            "description": "Gestión de jugadores y sus datos de contacto",
-            "externalDocs": {
-                "description": "Documentación detallada",
-                "url": "https://docs.gestion-canchas.com/jugadores"
-            }
-        },
-        {
-            "name": "reservas",
-            "description": "Sistema de reservas y control de disponibilidad",
-            "externalDocs": {
-                "description": "Documentación detallada", 
-                "url": "https://docs.gestion-canchas.com/reservas"
-            }
-        }
-    ]
     
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 
-# Crear aplicación FastAPI
-if environment == "production":
-    app = FastAPI(
-        title=app_title,
-        description=app_description,
-        version=app_version,
-        docs_url=None,  # Deshabilitar documentación sin autenticación
-        redoc_url=None,
-        openapi_url=None
-    )
-else:
-    app = FastAPI(
-        title=app_title,
-        description=app_description,
-        version=app_version,
-        docs_url="/docs",
-        redoc_url="/redoc",
-        openapi_url="/openapi.json"
-    )
+app = FastAPI(
+    title=app_title,
+    description=app_description,
+    version=app_version,
+    docs_url="/docs",
+    redoc_url="/redoc",
+    openapi_url="/openapi.json"
+)
 
 # Configurar OpenAPI personalizado
 app.openapi = custom_openapi
 
-# Endpoints protegidos para documentación en producción
-if environment == "production":
-    @app.get("/docs", response_class=HTMLResponse, include_in_schema=False)
-    async def get_docs(username: str = Depends(get_current_user)):
-        return get_swagger_ui_html(
-            openapi_url="/openapi.json",
-            title=f"{app_title} - Documentación",
-            swagger_js_url="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.9.0/swagger-ui-bundle.js",
-            swagger_css_url="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.9.0/swagger-ui.css",
-            swagger_ui_parameters={
-                "defaultModelsExpandDepth": 2,
-                "defaultModelExpandDepth": 2,
-                "displayRequestDuration": True,
-                "filter": True,
-                "persistAuthorization": True,
-                "theme": "dark"
-            }
-        )
-    
-    @app.get("/redoc", response_class=HTMLResponse, include_in_schema=False)
-    async def get_redoc(username: str = Depends(get_current_user)):
-        from fastapi.openapi.docs import get_redoc_html
-        return get_redoc_html(
-            openapi_url="/openapi.json",
-            title=f"{app_title} - Documentación ReDoc"
-        )
-    
-    @app.get("/openapi.json", include_in_schema=False)
-    async def get_openapi_endpoint(username: str = Depends(get_current_user)):
-        return app.openapi()
+
 
 # Incluir routers
 app.include_router(jugador_router)
