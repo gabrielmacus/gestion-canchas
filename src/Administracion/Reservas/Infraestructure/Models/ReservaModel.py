@@ -18,5 +18,5 @@ class ReservaModel(BaseSQLAlchemyModel):
     jugador_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("jugadores.id"), nullable=False)
     
     # Relaciones
-    cancha: Mapped["CanchaModel"] = relationship("CanchaModel", lazy="select")
-    jugador: Mapped["JugadorModel"] = relationship("JugadorModel", lazy="select") 
+    cancha: Mapped["CanchaModel"] = relationship("CanchaModel", lazy="joined")
+    jugador: Mapped["JugadorModel"] = relationship("JugadorModel", lazy="joined") 

@@ -21,5 +21,7 @@ class ReservaMappings:
             fecha_hora=reserva.fecha_hora.value,
             duracion=reserva.duracion.value,
             cancha_id=reserva.cancha_id.value,
-            jugador_id=reserva.jugador_id.value
+            jugador_id=reserva.jugador_id.value,
+            cancha_nombre=reserva.cancha_nombre.value,
+            jugador_nombre=reserva.jugador_nombre.value
         ) 

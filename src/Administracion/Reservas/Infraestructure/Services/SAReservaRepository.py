@@ -24,6 +24,8 @@ class SAReservaRepository(BaseSQLAlchemyRepository[Reserva, ReservaModel], Reser
             duracion=model.duracion,
             cancha_id=str(model.cancha_id),
             jugador_id=str(model.jugador_id),
+            cancha_nombre=str(model.cancha.nombre),
+            jugador_nombre=f"{str(model.jugador.nombre)} {str(model.jugador.apellido)}",
             now=model.created_at
         )
     

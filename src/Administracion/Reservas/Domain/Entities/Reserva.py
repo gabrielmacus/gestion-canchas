@@ -6,6 +6,8 @@ from src.Administracion.Reservas.Domain.ValueObjects.ReservaCanchaId import Rese
 from src.Administracion.Reservas.Domain.ValueObjects.ReservaId import ReservaId
 from dataclasses import dataclass
 from src.Administracion.Reservas.Domain.ValueObjects.ReservaJugadorId import ReservaJugadorId
+from src.Administracion.Reservas.Domain.ValueObjects.ReservaCanchaNombre import ReservaCanchaNombre
+from src.Administracion.Reservas.Domain.ValueObjects.ReservaJugadorNombre import ReservaJugadorNombre
 
 @dataclass
 class Reserva(AggregateRoot):
@@ -14,13 +16,19 @@ class Reserva(AggregateRoot):
     _duracion: ReservaDuracionMinutos
     _cancha_id: ReservaCanchaId
     _jugador_id: ReservaJugadorId # TODO: aca la IA habia importado un modulo (JugadorId) de otro dominio, violando DDD
+    _cancha_nombre: ReservaCanchaNombre
+    _jugador_nombre: ReservaJugadorNombre
     
-    def __init__(self, id: str, fecha_hora:datetime, duracion:int, cancha_id:str, jugador_id:str, now:datetime):
+    
+    
+    def __init__(self, id: str, fecha_hora:datetime, duracion:int, cancha_id:str, jugador_id:str, cancha_nombre:str, jugador_nombre:str, now:datetime):
         self._id = ReservaId(id)
         self._fecha_hora = ReservaFechaHora(fecha_hora, now)
         self._duracion = ReservaDuracionMinutos(duracion)
         self._cancha_id = ReservaCanchaId(cancha_id)
         self._jugador_id = ReservaJugadorId(jugador_id)
+        self._cancha_nombre = ReservaCanchaNombre(cancha_nombre)
+        self._jugador_nombre = ReservaJugadorNombre(jugador_nombre)
         super().__init__()
     
     @property
@@ -43,10 +51,18 @@ class Reserva(AggregateRoot):
     def jugador_id(self):
         return self._jugador_id
     
+    @property
+    def cancha_nombre(self):
+        return self._cancha_nombre
+    
+    @property
+    def jugador_nombre(self):
+        return self._jugador_nombre
+    
     @staticmethod
-    def create(id: str, fecha_hora:datetime, duracion:int, cancha_id:str, jugador_id:str, now:datetime):
+    def create(id: str, fecha_hora:datetime, duracion:int, cancha_id:str, jugador_id:str, cancha_nombre:str, jugador_nombre:str, now:datetime):
         # TODO: Domain event
-        return Reserva(id, fecha_hora, duracion, cancha_id, jugador_id, now)
+        return Reserva(id, fecha_hora, duracion, cancha_id, jugador_id, cancha_nombre, jugador_nombre, now)
     
     def calculate_fecha_hora_fin(self) -> datetime:
         return self._fecha_hora.value + timedelta(minutes=self._duracion.value)

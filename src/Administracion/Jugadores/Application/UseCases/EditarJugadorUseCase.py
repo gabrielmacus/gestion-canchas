@@ -18,7 +18,6 @@ class EditarJugadorUseCase:
     def _update_jugador(self, jugador: Jugador, request: EditarJugadorDTO) -> Jugador:
         """Crea una nueva instancia de Jugador con los valores actualizados, respetando inmutabilidad"""
         dump = request.model_dump(exclude_unset=True)
-        print(dump)
         return Jugador(
             id=jugador.id.value,
             nombre=jugador.nombre.value if 'nombre' not in dump else dump['nombre'],

@@ -29,6 +29,7 @@ class BaseSQLAlchemyRepository(RepositoryInterface[T], ABC, Generic[T, M]):
         with Session(self.engine) as session:
             query = self.criteria_converter.convert(self.model_class, criteria)
             results = session.execute(query).scalars().all()
+
             return [self.model_to_entity(model) for model in results]
     
     def update_by_id(self, id: str, entity: T) -> None:
