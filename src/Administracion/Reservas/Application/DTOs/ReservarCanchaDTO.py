@@ -1,9 +1,8 @@
-from dataclasses import dataclass
+from pydantic import BaseModel
 from datetime import datetime
 
-@dataclass
-class ReservarCanchaDTO:
-    id_reserva: str
+class ReservarCanchaDTO(BaseModel):
+    id: str
     fecha_hora: datetime
     duracion: int
     cancha_id: str

@@ -8,7 +8,7 @@ class ReservarCanchaUseCase:
 
     def execute(self, request: ReservarCanchaDTO) -> Reserva:
         return self.__booking_service.book(
-            id=request.id_reserva,
+            id=request.id,
             fecha_hora=request.fecha_hora,
             duracion=request.duracion,
             cancha_id=request.cancha_id,

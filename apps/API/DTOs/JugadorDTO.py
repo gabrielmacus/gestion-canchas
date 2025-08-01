@@ -1,9 +1,9 @@
-from dataclasses import dataclass
+from pydantic import BaseModel
+from typing import Optional
 
-@dataclass
-class JugadorDTO:
+class JugadorDTO(BaseModel):
     id: str
     nombre: str
     apellido: str
     telefono: str
-    email: str | None
+    email: Optional[str] = None

@@ -49,6 +49,7 @@ class ReservasActivasQuery:
                 value=FilterValue(time_provider.now_utc().isoformat())
             )
         ]
+        
         if reserva_id:
             filters.append(
                 Filter(

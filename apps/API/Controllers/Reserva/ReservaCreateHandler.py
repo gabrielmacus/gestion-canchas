@@ -9,6 +9,8 @@ from fastapi import HTTPException, Response
 from src.Administracion.Reservas.Domain.Exceptions.CanchaReservadaException import CanchaReservadaException
 from apps.API.DTOs.ErrorResponseDTO import ErrorResponseDTO
 from apps.API.DTOs.CanchaReservadaErrorResponseDTO import CanchaReservadaErrorResponseDTO
+from src.SharedKernel.Infraestructure.Exceptions.UniqueIdViolationException import UniqueIdViolationException
+from fastapi import HTTPException
 
 class ReservaCreateHandler():
     def __init__(self):
@@ -27,4 +29,8 @@ class ReservaCreateHandler():
                 cancha_colision_id=e.cancha_id
             )
         except InvalidFechaHoraException as e:
-            raise HTTPException(status_code=400, detail=ErrorResponseDTO(detail=str(e)))
+            response.status_code = 400
+            return ErrorResponseDTO(detail=str(e))
+        except UniqueIdViolationException as e:
+            response.status_code = 400
+            return ErrorResponseDTO(detail=str(e))

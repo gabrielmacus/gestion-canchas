@@ -6,6 +6,8 @@ from src.SharedKernel.Domain.Contracts.Repository.RepositoryInterface import Rep
 from src.SharedKernel.Domain.Criteria.Criteria import Criteria
 from src.SharedKernel.Domain.Criteria.CountCriteria import CountCriteria
 from src.SharedKernel.Infraestructure.Criteria.CriteriaToSQLAlchemyConverter import CriteriaToSQLAlchemyConverter
+from sqlalchemy.exc import IntegrityError
+from src.SharedKernel.Infraestructure.Exceptions.UniqueIdViolationException import UniqueIdViolationException
 
 T = TypeVar('T')  # Domain Entity
 M = TypeVar('M', bound=DeclarativeBase)  # SQLAlchemy Model
@@ -46,9 +48,19 @@ class BaseSQLAlchemyRepository(RepositoryInterface[T], ABC, Generic[T, M]):
     
     def add(self, entity: T) -> None:
         with Session(self.engine) as session:
-            model_instance = self.entity_to_model(entity)
-            session.add(model_instance)
-            session.commit()
+            try:
+                model_instance = self.entity_to_model(entity)
+                session.add(model_instance)
+                session.commit()
+            except IntegrityError as e:
+                session.rollback()
+                # Captura el error específico de violación de unicidad de Postgres (psycopg2.errors.UniqueViolation)
+                if hasattr(e.orig, '__class__') and e.orig.__class__.__name__ == "UniqueViolation":
+                    raise UniqueIdViolationException() 
+                raise e
+            except Exception as e:
+                session.rollback()
+                raise e
             
     def get_by_id(self, id: str) -> T | None:
         with Session(self.engine) as session:

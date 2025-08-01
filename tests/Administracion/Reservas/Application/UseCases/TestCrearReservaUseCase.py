@@ -19,7 +19,7 @@ class TestCrearReservaUseCase:
     def __then_cancha_is_booked(self, request: ReservarCanchaDTO):
         assert self.__booking_service is not None
         self.__booking_service.book.assert_called_once_with( # pyright: ignore[reportAny]
-            id=request.id_reserva,
+            id=request.id,
             fecha_hora=request.fecha_hora,
             duracion=request.duracion,
             cancha_id=request.cancha_id,
@@ -29,7 +29,7 @@ class TestCrearReservaUseCase:
     def test_crear_reserva(self):
         # Given
         request = ReservarCanchaDTO(
-            id_reserva= IdMother.create(),
+            id= IdMother.create(),
             fecha_hora=ReservaFechaHoraMother.create(),
             duracion=ReservaDuracionMinutosMother.create(),
             cancha_id= IdMother.create(),

@@ -1,7 +1,7 @@
-from dataclasses import dataclass
+from pydantic import BaseModel
 
-@dataclass
-class CanchaDTO:
+class CanchaDTO(BaseModel):
     id: str
     nombre: str
     techada: bool 
+    
