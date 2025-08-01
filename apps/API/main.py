@@ -90,11 +90,6 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc",
     openapi_url="/openapi.json",
-    servers=[
-        {
-            "url": os.getenv("API_URL","")
-        }
-    ],
     root_path=os.getenv("ROOT_PATH","/")
 )
 
@@ -109,12 +104,10 @@ app.include_router(cancha_router)
 app.include_router(reserva_router)
 
 # Configurar CORS
-origin = os.getenv("ALLOWED_ORIGIN")
-assert origin is not None
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[origin],
+    allow_origins=['*'],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH"],
     allow_headers=["*"],
