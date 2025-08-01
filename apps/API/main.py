@@ -89,7 +89,7 @@ app = FastAPI(
     version=app_version,
     docs_url="/docs",
     redoc_url="/redoc",
-    openapi_url="/openapi.json"
+    openapi_url="/openapi.json",
 )
 
 # Configurar OpenAPI personalizado

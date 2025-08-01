@@ -1,16 +1,14 @@
-from fastapi import APIRouter, Query, Path, status
-from typing import Optional
+from fastapi import APIRouter
 
 from apps.API.Controllers.Reserva.ReservaFindHandler import ReservaFindHandler
 from apps.API.Controllers.Reserva.ReservaGetByIdHandler import ReservaGetByIdHandler
 from apps.API.Controllers.Reserva.ReservaCreateHandler import ReservaCreateHandler
 from apps.API.Controllers.Reserva.ReservaUpdateHandler import ReservaUpdateHandler
 from apps.API.Controllers.Reserva.ReservaDeleteHandler import ReservaDeleteHandler
-import os
 reserva_router = APIRouter(prefix="/reservas", tags=["reservas"])
 
 reserva_router.add_api_route(
-    path=os.getenv("API_URL","") + "/reservas",
+    path="/",
     endpoint=ReservaFindHandler().find,
     methods=["GET"],
     summary="Buscar reservas con filtros avanzados",
@@ -42,7 +40,7 @@ reserva_router.add_api_route(
 )
 
 reserva_router.add_api_route(
-    path=os.getenv("API_URL","") + "/reservas/{id}",
+    path="/{id}",
     endpoint=ReservaGetByIdHandler().get_by_id,
     methods=["GET"],
     summary="Obtener reserva específica por ID",
@@ -66,7 +64,7 @@ reserva_router.add_api_route(
 )
 
 reserva_router.add_api_route(
-    path=os.getenv("API_URL","") + "/reservas",
+    path="/",
     endpoint=ReservaCreateHandler().create,
     methods=["POST"],
     summary="Crear nueva reserva de cancha",
@@ -113,7 +111,7 @@ reserva_router.add_api_route(
 )
 
 reserva_router.add_api_route(
-    path=os.getenv("API_URL","") + "/reservas/{id}",
+    path="/{id}",
     endpoint=ReservaUpdateHandler().update,
     methods=["PATCH"],
     summary="Modificar reserva existente",
@@ -141,7 +139,7 @@ reserva_router.add_api_route(
 )
 
 reserva_router.add_api_route(
-    path=os.getenv("API_URL","") + "/reservas/{id}",
+    path="/{id}",
     endpoint=ReservaDeleteHandler().delete,
     methods=["DELETE"],
     summary="Elminar reserva",

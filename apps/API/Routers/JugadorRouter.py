@@ -1,6 +1,4 @@
-import os
-from fastapi import APIRouter, Query, Path, status
-from typing import Optional
+from fastapi import APIRouter
 
 from apps.API.Controllers.Jugador.JugadorFindHandler import JugadorFindHandler
 from apps.API.Controllers.Jugador.JugadorGetByIdHandler import JugadorGetByIdHandler
@@ -11,7 +9,7 @@ from apps.API.Controllers.Jugador.JugadorDeleteHandler import JugadorDeleteHandl
 jugador_router = APIRouter(prefix="/jugadores", tags=["jugadores"])
 
 jugador_router.add_api_route(
-    path=os.getenv("API_URL","") + "/jugadores",
+    path="/",
     endpoint=JugadorFindHandler().find,
     methods=["GET"],
     summary="Buscar jugadores con paginación y filtros",
@@ -47,7 +45,7 @@ jugador_router.add_api_route(
 )
 
 jugador_router.add_api_route(
-    path=os.getenv("API_URL","") + "/jugadores/{id}",
+    path="/{id}",
     endpoint=JugadorGetByIdHandler().get_by_id,
     methods=["GET"],
     summary="Obtener jugador por ID",
@@ -72,7 +70,7 @@ jugador_router.add_api_route(
 )
 
 jugador_router.add_api_route(
-    path=os.getenv("API_URL","") + "/jugadores",
+    path="/",
     endpoint=JugadorCreateHandler().create,
     methods=["POST"],
     summary="Registrar nuevo jugador",
@@ -109,7 +107,7 @@ jugador_router.add_api_route(
 )
 
 jugador_router.add_api_route(
-    path=os.getenv("API_URL","") + "/jugadores/{id}",
+    path="/{id}",
     endpoint=JugadorUpdateHandler().update,
     methods=["PATCH"],
     summary="Actualizar datos del jugador",
@@ -129,7 +127,7 @@ jugador_router.add_api_route(
 )
 
 jugador_router.add_api_route(
-    path=os.getenv("API_URL","") + "/jugadores/{id}",
+    path="/{id}",
     endpoint=JugadorDeleteHandler().delete,
     methods=["DELETE"],
     summary="Eliminar jugador del sistema",

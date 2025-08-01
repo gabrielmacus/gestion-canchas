@@ -1,17 +1,15 @@
-from fastapi import APIRouter, Query, Path, status
-from typing import Optional
+from fastapi import APIRouter
 
 from apps.API.Controllers.Cancha.CanchaFindHandler import CanchaFindHandler
 from apps.API.Controllers.Cancha.CanchaGetByIdHandler import CanchaGetByIdHandler
 from apps.API.Controllers.Cancha.CanchaCreateHandler import CanchaCreateHandler
 from apps.API.Controllers.Cancha.CanchaUpdateHandler import CanchaUpdateHandler
 from apps.API.Controllers.Cancha.CanchaDeleteHandler import CanchaDeleteHandler
-import os
 
 cancha_router = APIRouter(prefix="/canchas", tags=["canchas"])
 
 cancha_router.add_api_route(
-    path=os.getenv("API_URL","") + "/canchas",
+    path= "/",
     endpoint=CanchaFindHandler().find,
     methods=["GET"],
     summary="Buscar canchas con paginación y filtros",
@@ -42,7 +40,7 @@ cancha_router.add_api_route(
 )
 
 cancha_router.add_api_route(
-    path=os.getenv("API_URL","") + "/canchas/{id}",
+    path="/{id}",
     endpoint=CanchaGetByIdHandler().get_by_id,
     methods=["GET"],
     summary="Obtener cancha por ID",
@@ -54,7 +52,7 @@ cancha_router.add_api_route(
 )
 
 cancha_router.add_api_route(
-    path=os.getenv("API_URL","") + "/canchas",
+    path="/",
     endpoint=CanchaCreateHandler().create,
     methods=["POST"],
     summary="Crear nueva cancha",
@@ -79,7 +77,7 @@ cancha_router.add_api_route(
 )
 
 cancha_router.add_api_route(
-    path=os.getenv("API_URL","") + "/canchas/{id}",
+    path="/{id}",
     endpoint=CanchaUpdateHandler().update,
     methods=["PATCH"],
     summary="Actualizar cancha existente",
@@ -92,7 +90,7 @@ cancha_router.add_api_route(
 )
 
 cancha_router.add_api_route(
-    path=os.getenv("API_URL","") + "/canchas/{id}",
+    path="/{id}",
     endpoint=CanchaDeleteHandler().delete,
     methods=["DELETE"],
     summary="Eliminar cancha",
