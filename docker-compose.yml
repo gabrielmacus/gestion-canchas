@@ -22,7 +22,7 @@ services:
       - 8000:8000
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.coparque_api.rule=Host(`vps-2124131-x.dattaweb.com`) && PathPrefix(`/app`)"
+      - "traefik.http.routers.coparque_api.rule=Host(`vps-2211796-x.dattaweb.com`)"
       - "traefik.http.routers.coparque_api.entrypoints=websecure"
       - "traefik.http.routers.coparque_api.tls.certresolver=leresolver"
     networks:
