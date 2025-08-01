@@ -107,10 +107,11 @@ app.include_router(reserva_router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*'],
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allow_headers=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"]
+
 )
 
 # Endpoint de estado del sistema
