@@ -8,6 +8,26 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
+  app:
+    container_name: gestion-canchas-app
+    restart: unless-stopped
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles:
+      - production
+    ports:
+      - 8000:8000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.coparque_api.rule=Host(`vps-2124131-x.dattaweb.com`) && PathPrefix(`/app`)"
+      - "traefik.http.routers.coparque_api.entrypoints=websecure"
+      - "traefik.http.routers.coparque_api.tls.certresolver=leresolver"
+    networks:
+      - traefik_default
+
   develop:
     container_name: gestion-canchas-develop
     restart: unless-stopped
@@ -20,11 +40,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+    depends_on:
+      - db
+    profiles:
+      - development
     ports:
       - 7000:8000
   adminer:
     image: adminer
-    restart: always
+    restart: unless-stopped
+    depends_on:
+      - db
     ports:
       - 7080:8080
   db:
@@ -36,9 +62,12 @@ services:
     volumes:
       - gestion-canchas-db:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: gestion_canchas_db
       POSTGRES_PORT: 5432
 volumes:
   gestion-canchas-db:
+networks:
+  traefik_default:
+    external: true
